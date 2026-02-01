@@ -9,6 +9,15 @@
     "mymlh": {
       "type": "http",
       "url": "https://mymlh-mcp.git.ci/mcp"
+    },
+    
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-filesystem",
+        "--root",
+        "./"
+      ]
     }
   }
 }

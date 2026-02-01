@@ -1,0 +1,42 @@
+# Driver Distraction Detector Configuration - OPTIMIZED FOR 4GB RASPBERRY PI
+# Memory optimization is critical
+
+raspberry_pi:
+  # Bluetooth address of your Raspberry Pi
+  bluetooth_address: "B8:27:EB:XX:XX:XX"
+  bluetooth_port: 1
+  compress_frames: true
+  compression_quality: 70  # 0-100, lower = less memory/bandwidth
+
+camera:
+  # CRITICAL: Lower resolution to reduce memory footprint
+  target_fps: 1  # 1 frame per second (DO NOT INCREASE)
+  width: 320     # Reduced from 640 - MediaPipe works well at 320x240
+  height: 240    # Reduced from 480
+  frame_skip: 1  # Process every Nth frame for additional speed
+
+vision:
+  # Face orientation thresholds (in degrees)
+  yaw_threshold: 20  # Left/right head rotation
+  pitch_threshold: 15  # Up/down head rotation
+  roll_threshold: 20  # Head tilt
+  use_lite_model: true  # Use lightweight MediaPipe model
+  max_num_faces: 1  # Only detect one face
+  static_image_mode: false  # Trading speed for memory on Pi
+
+analysis:
+  # Distraction level thresholds
+  warning_threshold: 5  # Number of failures to trigger warning
+  critical_threshold: 10  # Number of failures to trigger critical alert
+  severe_threshold: 20  # Number of failures to trigger severe alert
+  history_window: 120  # Reduced from 300s (2 min tracking window)
+  max_events_buffer: 100  # Cap maximum events in memory
+
+alerting:
+  enabled: true
+  visual_alerts_enabled: false  # Disable on Pi (save memory)
+  audible_alerts_enabled: true
+  system_alerts_enabled: true
+  cooldown: 5  # Cooldown between alerts (seconds)
+  alert_sound_path: "resources/alert_sound.wav"
+  use_beep_only: true  # Simple system beep instead of loading audio files
